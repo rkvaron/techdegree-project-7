@@ -56,10 +56,15 @@ const phraseLetters = document.querySelectorAll('.letter');
 
 
 
-qwerty.addEventListener('click', function checkLetter(event) {
+qwerty.addEventListener('click', (event) => {
   //assign each button its textContext
-  let buttonLetter = event.target.textContent;
-  event.target.classList.add("chosen");
+  const buttonLetter = event.target.textContent;
+  const isClicked = event.target;
+  if (isClicked && buttonLetter.tagName == "button") {
+    event.target.classList.add("chosen");
+  } else {
+    console.log("no dice");
+  }
 
     for(let i=0; i < phraseLetters.length; i+=1) {
 
@@ -67,13 +72,22 @@ qwerty.addEventListener('click', function checkLetter(event) {
         let letterFound = phraseLetters[i];
         letterFound.classList.add("show");
       } else {
-
         console.log('nope');
-
+        //do I add a return null; here? I think it breaks the conditional
       }
     }
 });
 
+
+
+
+
+
+
+
+
+
+//backup stuff
 
 
 //missed +=1;
