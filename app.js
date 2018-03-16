@@ -1,7 +1,8 @@
 //create variables to set up game
-const qwerty = document.getElementById('qwerty');
+const overlay = document.getElementById('overlay');
 const phrase = document.getElementById('phrase');
-const overlay = document.getElementById('overlay')
+const qwerty = document.getElementById('qwerty');
+const keyboardButtons = qwerty.getElementsByTagName("button");
 let missed = 0;
 
 //event to hide the start screen overlay
@@ -29,7 +30,7 @@ function getRandomPhraseAsArray(arr){
   return answerArray;
 }
 
-//function to assign phrase to the gameboard
+//function to select random phrase  and add to the gameboard
 function addPhraseToDisplay(arr){
   const ul = phrase.firstElementChild;
   for(let i=0; i < arr.length; i+=1){
@@ -46,17 +47,46 @@ function addPhraseToDisplay(arr){
 
 const phraseArray = getRandomPhraseAsArray(phrases);
 addPhraseToDisplay(phraseArray);
+const phraseLetters = document.querySelectorAll('.letter');
 
-//checkLetter function to check letters against the phraseArray
-function checkLetter(letterGuess){
-  const letters = phraseArray.getElementsByClassName("letter");
-    for(let i=0; i < letters.length; i+=1){
-      if (letterGuess.textContent == letters[i].textContent) {
-        letterGuess.style = "show";
+//checkLetter function: to be used in the event addEventListener
+//should have 1 parameter: the clicked button by player
+//function should loop over letter to check if they match the letter in the keyboardButtons
+//if there is a match, function should add class = "show" to the item containing the letter, store the matching letter inside a variable and return that letter.
+
+
+
+qwerty.addEventListener('click', function checkLetter(event) {
+  //assign each button its textContext
+  let buttonLetter = event.target.textContent;
+  event.target.classList.add("chosen");
+
+    for(let i=0; i < phraseLetters.length; i+=1) {
+
+      if( phraseLetters[i].textContent == buttonLetter ) {
+        let letterFound = phraseLetters[i];
+        letterFound.classList.add("show");
       } else {
-        return null;
+
+        console.log('nope');
+
       }
     }
-  }
+});
 
-  
+
+
+//missed +=1;
+
+// qwerty.addEventListener('click', (event) => {
+//   //assign each button its textContext
+//   let buttonLetter = event.target.textContent;
+//   for(let i=0; i < phraseLetters.length; i+=1) {
+//     if( phraseLetters[i].textContent == buttonLetter ) {
+//       let letterInPhrase = phraseLetters[i];
+//       letterInPhrase.classList.add("show");
+//     } else {
+//       console.log("nope");
+//     }
+//   }
+// });
