@@ -25,10 +25,10 @@ function getRandomPhraseAsArray(arr){
   return answerArray;
 }
 
-//function to select random phrase and add to the gameboard, than add classes of "letter" or "space"
+//function to select random phrase and add to the gameboard, then add classes of "letter" or "space"
 function addPhraseToDisplay(arr) {
   const ul = phrase.firstElementChild;
-  for(let i=0; i < arr.length; i+=1){
+  for(let i = 0; i < arr.length; i+=1) {
     let li = document.createElement('li');
     li.textContent = arr[i];
       if(arr[i] === ' ') {
@@ -51,6 +51,8 @@ function checkLetter(button) {
       //if there is a match, function should add class = "show" to the item containing the letter, store the matching letter inside letterFound
       phraseLetters[i].classList.add("show");
       letterFound = phraseLetters[i].textContent;
+    } else {
+      button.setAttribute('disabled', true);
     }
   }
   return letterFound;
@@ -113,13 +115,20 @@ qwerty.addEventListener('click', (e) => {
 });
 
 //event to hide the start screen overlay
-overlay.addEventListener('click', (e) => {
-  overlay.style.visibility="hidden";
-  // to show: overlay.style.visibility="visible";
-});
+// overlay.addEventListener('click', (e) => {
+//       overlay.style.visibility="hidden";
+//   // to show: overlay.style.visibility="visible";
+// });
 
 overlay.addEventListener('click', (e) => {
-  if(e.target.textContent === "Play Again?"){
-    restartGame();
-  }
+  if (e.target.className === 'btn__reset') {
+      const button = e.target;
+      if(button.textContent === "Start Game"){
+        overlay.style.visibility="hidden";
+      } else if(button.textContent === "Play Again?"){
+        restartGame();
+      } else {
+        console.log("error");
+      }
+    }
 });
